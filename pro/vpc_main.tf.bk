@@ -1,0 +1,37 @@
+provider "aws" {
+  region = "us-east-1"  # Specify your region
+}
+
+module "vpc_1" {
+  source = "terraform-aws-modules/vpc/aws"
+  name   = "vpc-1"
+  cidr   = "10.0.0.0/16"
+  azs    = ["us-east-1a", "us-east-1b"]
+
+  private_subnets = ["10.0.1.0/24", "10.0.2.0/24"]
+  public_subnets  = ["10.0.11.0/24", "10.0.12.0/24"]
+
+  enable_nat_gateway = true
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  tags = {
+    "Name" = "VPC-1"
+  }
+}
+
+module "vpc_2" {
+  source = "terraform-aws-modules/vpc/aws"
+  name   = "vpc-2"
+  cidr   = "10.1.0.0/16"
+  azs    = ["us-east-1a", "us-east-1b"]
+
+  private_subnets = ["10.1.1.0/24", "10.1.2.0/24"]
+  public_subnets  = ["10.1.11.0/24", "10.1.12.0/24"]
+
+  enable_nat_gateway = true
+  enable_dns_support = true
+  enable_dns_hostnames = true
+  tags = {
+    "Name" = "VPC-2"
+  }
+}
